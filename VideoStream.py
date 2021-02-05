@@ -56,6 +56,10 @@ class VideoStream:
             # Read first frame from the stream
             (self.grabbed, self.frame) = self.stream.read()
 
+        if self.PiOrUSB == 3: # Camera IP
+            self.stream = cv2.VideoCapture(src)
+            (self.grabbed, self.frame) = self.stream.read()
+
 	# Create a variable to control when the camera is stopped
         self.stopped = False
 
@@ -67,7 +71,7 @@ class VideoStream:
     def update(self):
 
         if self.PiOrUSB == 1: # PiCamera
-            
+
             # Keep looping indefinitely until the thread is stopped
             for f in self.stream:
                 # Grab the frame from the stream and clear the stream
@@ -81,7 +85,7 @@ class VideoStream:
                     self.rawCapture.close()
                     self.camera.close()
 
-        if self.PiOrUSB == 2: # USB camera
+        if self.PiOrUSB == 2 or self.PiOrUSB == 3: # USB camera / Camera IP
 
             # Keep looping indefinitely until the thread is stopped
             while True:
