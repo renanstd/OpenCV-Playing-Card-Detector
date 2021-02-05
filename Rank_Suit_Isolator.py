@@ -21,7 +21,7 @@ SUIT_WIDTH = 70
 SUIT_HEIGHT = 100
 
 # If using a USB Camera instead of a PiCamera, change PiOrUSB to 2
-PiOrUSB = 1
+PiOrUSB = 3
 
 if PiOrUSB == 1:
     # Import packages from picamera library
@@ -38,6 +38,9 @@ if PiOrUSB == 2:
     # Initialize USB camera
     cap = cv2.VideoCapture(0)
 
+if PiOrUSB == 3:
+    cap = cv2.VideoCapture("http://192.168.1.32:4747/video")
+
 # Use counter variable to switch from isolating Rank to isolating Suit
 i = 1
 
@@ -48,8 +51,8 @@ for Name in ['Ace','Two','Three','Four','Five','Six','Seven','Eight',
     filename = Name + '.jpg'
 
     print('Press "p" to take a picture of ' + filename)
-    
-    
+
+
 
     if PiOrUSB == 1: # PiCamera
         rawCapture.truncate(0)
@@ -64,7 +67,7 @@ for Name in ['Ace','Two','Three','Four','Five','Six','Seven','Eight',
 
             rawCapture.truncate(0)
 
-    if PiOrUSB == 2: # USB camera
+    if PiOrUSB == 2 or PiOrUSB == 3: # USB camera
         # Press 'p' to take a picture
         while(True):
 
